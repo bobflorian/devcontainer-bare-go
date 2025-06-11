@@ -1,0 +1,82 @@
+{
+  "name": "Go Development Container",
+  "build": {
+    "dockerfile": "../Dockerfile"
+  },
+  "workspaceFolder": "/app",
+  "mounts": [
+    "source=${localWorkspaceFolder},target=/app,type=bind"
+  ],
+  "customizations": {
+    "vscode": {
+      "settings": {
+        // Go language settings
+        "go.toolsManagement.checkForUpdates": "local",
+        "go.useLanguageServer": true,
+        "go.gopath": "/root/go",
+        "go.goroot": "/usr/local/go",
+        "go.lintTool": "golangci-lint",
+        "go.lintOnSave": "workspace",
+        "go.testFlags": ["-v", "-race"],
+        "go.coverOnSave": true,
+        "go.coverageDecorator": {
+          "type": "gutter",
+          "coveredHighlightColor": "rgba(64,128,64,0.5)",
+          "uncoveredHighlightColor": "rgba(128,64,64,0.25)"
+        },
+        "go.testTimeout": "10s",
+        
+        // Editor settings
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+          "source.organizeImports": "explicit"
+        },
+        "[go]": {
+          "editor.defaultFormatter": "golang.go",
+          "editor.snippetSuggestions": "none"
+        },
+        "[go.mod]": {
+          "editor.defaultFormatter": "golang.go"
+        },
+        
+        // Terminal settings
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "terminal.integrated.profiles.linux": {
+          "bash": {
+            "path": "/bin/bash",
+            "args": []
+          }
+        }
+      },
+      "extensions": [
+        // Core Go Development
+        "golang.go",                              // Official Go extension
+        "766b.go-outliner",                       // Go code outline
+        
+        // Code Quality & Linting
+        "streetsidesoftware.code-spell-checker",  // Spell checker
+        "usernamehw.errorlens",                   // Inline error display
+        
+        // Testing & Debugging
+        "hbenl.vscode-test-explorer",             // Test Explorer UI
+        "premparihar.gotestexplorer",             // Go Test Explorer
+        
+        // Productivity Tools
+        "gruntfuggly.todo-tree",                  // TODO tree view
+        "quicktype.quicktype",                    // Generate Go structs from JSON
+        "fill-labs.dependi",                      // Dependency management
+        
+        // Git & Version Control
+        "eamodio.gitlens",                        // Advanced Git features
+        
+        // File Support
+        "skellock.just",                          // Justfile support
+        "tamasfe.even-better-toml",               // TOML support
+        "EditorConfig.EditorConfig",              // EditorConfig support
+        "redhat.vscode-yaml"                      // YAML support
+      ]
+    }
+  },
+  "postCreateCommand": "go mod download",
+  "forwardPorts": [2345, 8080]
+}

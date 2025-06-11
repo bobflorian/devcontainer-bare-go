@@ -1,7 +1,3 @@
-module github.com/yourusername/yourproject
+module myapp
 
-go 1.23
-
-require (
-	// Add your dependencies here
-)
+go 1.24.3

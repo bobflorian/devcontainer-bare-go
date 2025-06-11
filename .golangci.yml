@@ -6,17 +6,12 @@ run:
   tests: true
   build-tags:
     - integration
-  skip-dirs:
-    - vendor
-    - third_party
-    - testdata
-    - examples
-    - bin
 
 output:
-  format: colored-line-number
-  print-issued-lines: true
-  print-linter-name: true
+  formats:
+    - format: colored-line-number
+      print-issued-lines: true
+      print-linter-name: true
 
 linters:
   enable:
@@ -33,7 +28,7 @@ linters:
     - bodyclose
     - dogsled
     - dupl
-    - exportloopref
+    - copyloopvar # replaced exportloopref which is deprecated
     - exhaustive
     - gci
     - gochecknoinits
@@ -64,7 +59,6 @@ linters:
     - whitespace
 
   disable:
-    - gomnd # Magic numbers - too many false positives
     - wsl   # Whitespace linter - too strict
     - nlreturn # New line return - too strict
 
@@ -100,11 +94,8 @@ linters-settings:
   goimports:
     local-prefixes: github.com/yourusername/yourproject
 
-  golint:
-    min-confidence: 0.8
 
   govet:
-    check-shadowing: true
     enable-all: true
 
   lll:
@@ -158,9 +149,15 @@ linters-settings:
     check-exported: false
 
 issues:
+  exclude-use-default: false
+  exclude-dirs:
+    - vendor
+    - third_party
+    - testdata
+    - examples
+    - bin
   max-issues-per-linter: 50
   max-same-issues: 10
-  new: false
   exclude-rules:
     # Exclude some linters from running on tests files
     - path: _test\.go
@@ -181,5 +178,3 @@ issues:
     - linters:
         - lll
       source: "https://"
-
-  exclude-use-default: false

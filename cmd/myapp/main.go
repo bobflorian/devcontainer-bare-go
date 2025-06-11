@@ -1,37 +1,49 @@
+// Package main implements a simple Go application with system information display.
 package main
 
 import (
 	"fmt"
-	"log"
-	"net/http"
+	"os"
 	"runtime"
+	"time"
 )
 
 var (
+	// Version represents the application version, set during build time.
 	Version   = "dev"
 	BuildTime = "unknown"
 	Commit    = "unknown"
 )
 
 func main() {
-	log.Printf("Starting application v%s (built: %s, commit: %s)", Version, BuildTime, Commit)
-	log.Printf("Running on %s/%s", runtime.GOOS, runtime.GOARCH)
+	fmt.Println("Hello, World!")
+	fmt.Println()
 
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "Hello from Go! Running on %s/%s\n", runtime.GOOS, runtime.GOARCH)
-		fmt.Fprintf(w, "Version: %s\n", Version)
-		fmt.Fprintf(w, "Build Time: %s\n", BuildTime)
-		fmt.Fprintf(w, "Commit: %s\n", Commit)
-	})
+	fmt.Println("=== Application Info ===")
+	fmt.Printf("Version:     %s\n", Version)
+	fmt.Printf("Build Time:  %s\n", BuildTime)
+	fmt.Printf("Commit:      %s\n", Commit)
+	fmt.Println()
 
-	http.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
-		w.WriteHeader(http.StatusOK)
-		fmt.Fprint(w, "OK")
-	})
+	fmt.Println("=== System Info ===")
+	fmt.Printf("OS:          %s\n", runtime.GOOS)
+	fmt.Printf("Architecture: %s\n", runtime.GOARCH)
+	fmt.Printf("CPU Cores:   %d\n", runtime.NumCPU())
+	fmt.Printf("Go Version:  %s\n", runtime.Version())
+	fmt.Printf("Hostname:    %s\n", getHostname())
+	fmt.Printf("Current Time: %s\n", time.Now().Format("2006-01-02 15:04:05"))
+	fmt.Println()
 
-	port := ":8080"
-	log.Printf("Server starting on port %s", port)
-	if err := http.ListenAndServe(port, nil); err != nil {
-		log.Fatal(err)
+	fmt.Println("✅ Go application is running successfully!")
+}
+
+// hostnameFunc is a variable to allow testing of error paths.
+var hostnameFunc = os.Hostname
+
+func getHostname() string {
+	hostname, err := hostnameFunc()
+	if err != nil {
+		return "unknown"
 	}
+	return hostname
 }

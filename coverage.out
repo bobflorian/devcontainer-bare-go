@@ -1,0 +1,5 @@
+mode: atomic
+myapp/cmd/myapp/main.go:18.13,38.2 16 1
+myapp/cmd/myapp/main.go:43.27,45.16 2 3
+myapp/cmd/myapp/main.go:45.16,47.3 1 1
+myapp/cmd/myapp/main.go:48.2,48.17 1 2
