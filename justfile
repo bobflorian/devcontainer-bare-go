@@ -18,8 +18,8 @@ test:
 
 # Run tests with coverage
 cover:
-    go test -v -race -coverprofile=coverage.out ./...
-    go tool cover -html=coverage.out -o coverage.html
+    go test -v -race -coverprofile=coverage.txt ./...
+    go tool cover -html=coverage.txt -o coverage.html
     @echo "Coverage report: coverage.html"
 
 # Format and lint

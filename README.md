@@ -3,9 +3,10 @@
 [![Build Status](https://github.com/bobflorian/go-bare-devcontainer/workflows/Build/badge.svg)](https://github.com/bobflorian/go-bare-devcontainer/actions)
 [![Go Report Card](https://goreportcard.com/badge/github.com/bobflorian/go-bare-devcontainer)](https://goreportcard.com/report/github.com/bobflorian/go-bare-devcontainer)
 [![codecov](https://codecov.io/gh/bobflorian/go-bare-devcontainer/branch/main/graph/badge.svg)](https://codecov.io/gh/bobflorian/go-bare-devcontainer)
-[![Go Reference](https://pkg.go.dev/badge/github.com/bobflorian/go-bare-devcontainer.svg)](https://pkg.go.dev/github.com/bobflorian/go-bare-devcontainer)
 
 A minimal Go application template with DevContainer support, featuring system information display and cross-platform builds.
+
+This project was created with heavy use of AI (Claude Code)
 
 ## Features
 

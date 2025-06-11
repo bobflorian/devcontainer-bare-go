@@ -1,5 +1,5 @@
 name: Build
-on: 
+on:
   push:
     branches: [ main ]
   pull_request:
@@ -26,3 +26,7 @@ jobs:
         with:
           name: build-artifacts
           path: bin/
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
