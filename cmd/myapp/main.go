@@ -10,9 +10,11 @@ import (
 
 var (
 	// Version represents the application version, set during build time.
-	Version   = "dev"
+	Version = "dev"
+	// BuildTime represents when the application was built, set during build time.
 	BuildTime = "unknown"
-	Commit    = "unknown"
+	// Commit represents the git commit hash, set during build time.
+	Commit = "unknown"
 )
 
 func main() {
