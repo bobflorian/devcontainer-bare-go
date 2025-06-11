@@ -1,0 +1,27 @@
+# Hadolint configuration file for Dockerfile linting
+
+# Ignored rules
+ignored:
+  - DL3008  # Pin versions in apt get install
+  - DL3009  # Delete the apt-get lists after installing something
+  - DL3018  # Pin versions in apk add (for Alpine)
+  - DL3028  # Pin versions in gem install
+
+# Trusted registries
+trustedRegistries:
+  - docker.io
+  - gcr.io
+  - mcr.microsoft.com
+
+# Required labels
+label-schema:
+  author: email
+  version: semver
+  description: text
+  maintainer: email
+
+# Strict labels - these must be defined
+strict-labels: false
+
+# Failure threshold
+failure-threshold: error

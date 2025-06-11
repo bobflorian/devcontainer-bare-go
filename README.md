@@ -25,6 +25,7 @@ This project was created with heavy use of AI (Claude Code)
 1. Open in VS Code with DevContainer extension
 2. Command Palette → "Dev Containers: Reopen in Container"
 3. Run the application:
+
    ```bash
    just run
    ```
@@ -32,10 +33,12 @@ This project was created with heavy use of AI (Claude Code)
 ### Local Development
 
 **Prerequisites:**
+
 - Go 1.24.3+
 - [just](https://github.com/casey/just) command runner
 
 **Setup:**
+
 ```bash
 git clone https://github.com/bobflorian/go-bare-devcontainer.git
 cd go-bare-devcontainer
@@ -95,7 +98,7 @@ All binaries are output to the `bin/` directory.
 
 ## Project Structure
 
-```
+```text
 ├── cmd/myapp/          # Application entrypoint
 ├── .devcontainer/      # DevContainer configuration
 ├── .github/workflows/  # CI/CD workflows

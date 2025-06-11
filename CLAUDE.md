@@ -3,11 +3,13 @@
 This document outlines the coding standards, architectural patterns, and best practices for the Go project. Follow these guidelines to maintain consistency across the codebase.
 
 ## Project Setup
+
 - Use the provided Dockerfile for consistent development environment
 - Follow the existing directory structure when adding new features
 - Use go.mod for dependency management
 
 ## Build & Test Commands
+
 - Build: `go build`
 - Run with hot reload: `arelo -p '**/*.go' -i '**/.*' -i '**/*_test.go' -- go run main.go`
 - Run all tests: `go test ./...`
@@ -19,6 +21,7 @@ This document outlines the coding standards, architectural patterns, and best pr
 - Vet code: `go vet ./...`
 
 ## Code Style Guidelines
+
 - **Imports**: Standard Go import organization (stdlib, external, internal) with blank lines between groups
 - **Error Handling**: Return errors explicitly; prefer wrapping with fmt.Errorf("context: %w", err)
 - **Naming**: Use Go conventions (CamelCase for exported, camelCase for unexported)
@@ -32,6 +35,7 @@ This document outlines the coding standards, architectural patterns, and best pr
 - **Line Length**: Keep lines under 100 characters when practical
 
 ## Comment Guidelines
+
 - Package comments: Single line describing package purpose
 - Exported functions/types: Start with the name, e.g., "FunctionName does..."
 - Complex logic: Add inline comments for non-obvious operations
@@ -40,6 +44,7 @@ This document outlines the coding standards, architectural patterns, and best pr
 - Use complete sentences with proper punctuation
 
 ## Testing Patterns
+
 - Write table-driven tests using t.Run() for subtests
 - Use testify/assert for assertions when appropriate
 - Create test fixtures in testdata directories
@@ -51,6 +56,7 @@ This document outlines the coding standards, architectural patterns, and best pr
 - Always check test coverage for new code
 
 ## Error Handling
+
 - Always check errors immediately after function calls
 - Wrap errors with context using fmt.Errorf
 - Define custom error types for domain-specific errors
@@ -60,6 +66,7 @@ This document outlines the coding standards, architectural patterns, and best pr
 - Never panic in library code
 
 ## Logging
+
 - Use structured logging (e.g., slog or zerolog)
 - Include relevant context in log messages
 - Use appropriate log levels (Debug, Info, Warn, Error)
@@ -67,6 +74,7 @@ This document outlines the coding standards, architectural patterns, and best pr
 - Use consistent field names across log entries
 
 ## Performance Considerations
+
 - Profile before optimizing (pprof)
 - Prefer sync.Pool for frequently allocated objects
 - Use buffered channels when appropriate
@@ -76,6 +84,7 @@ This document outlines the coding standards, architectural patterns, and best pr
 - Use context for cancellation in long-running operations
 
 ## Concurrency Patterns
+
 - Prefer channels over shared memory
 - Use sync.Mutex for protecting shared state
 - Always handle goroutine lifecycle (no goroutine leaks)
@@ -84,6 +93,7 @@ This document outlines the coding standards, architectural patterns, and best pr
 - Avoid starting goroutines in init()
 
 ## API Design
+
 - Follow RESTful conventions for HTTP APIs
 - Use consistent URL patterns
 - Return appropriate HTTP status codes
@@ -93,6 +103,7 @@ This document outlines the coding standards, architectural patterns, and best pr
 - Document API endpoints with OpenAPI/Swagger
 
 ## Security Best Practices
+
 - Never hardcode secrets or credentials
 - Validate all user input
 - Use crypto/rand for security-sensitive randomness
@@ -101,6 +112,7 @@ This document outlines the coding standards, architectural patterns, and best pr
 - Implement proper authentication and authorization
 
 ## Docker & Deployment
+
 - Keep Docker images small using multi-stage builds
 - Use non-root users in containers
 - Follow 12-factor app principles
@@ -109,7 +121,8 @@ This document outlines the coding standards, architectural patterns, and best pr
 - Log to stdout/stderr
 
 ## Project Structure
-```
+
+```text
 /app/
 ├── cmd/           # Main applications
 ├── internal/      # Private application code
@@ -121,6 +134,7 @@ This document outlines the coding standards, architectural patterns, and best pr
 ```
 
 ## Git Workflow
+
 - Write clear, imperative commit messages
 - Keep commits focused and atomic
 - Run tests before committing
@@ -128,6 +142,7 @@ This document outlines the coding standards, architectural patterns, and best pr
 - Squash commits when merging feature branches
 
 ## Continuous Integration
+
 - All tests must pass before merging
 - Maintain test coverage above 80%
 - Run linters in CI pipeline
@@ -135,6 +150,7 @@ This document outlines the coding standards, architectural patterns, and best pr
 - Use semantic versioning for releases
 
 ## Important Reminders
+
 - Do what has been asked; nothing more, nothing less
 - Never create files unless they're absolutely necessary
 - Always prefer editing existing files to creating new ones

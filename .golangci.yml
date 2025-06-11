@@ -23,7 +23,7 @@ linters:
     - staticcheck
     - typecheck
     - unused
-    
+
     # Additional linters
     - bodyclose
     - dogsled
@@ -167,13 +167,13 @@ issues:
         - dupl
         - gosec
         - gocognit
-    
+
     # Exclude known issues in generated files
     - path: \.pb\.go
       linters:
         - golint
         - stylecheck
-    
+
     # Exclude lll issues for long lines with URLs
     - linters:
         - lll
