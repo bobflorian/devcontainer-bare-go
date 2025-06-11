@@ -1,0 +1,185 @@
+# golangci-lint configuration
+# https://golangci-lint.run/usage/configuration/
+
+run:
+  timeout: 5m
+  tests: true
+  build-tags:
+    - integration
+  skip-dirs:
+    - vendor
+    - third_party
+    - testdata
+    - examples
+    - bin
+
+output:
+  format: colored-line-number
+  print-issued-lines: true
+  print-linter-name: true
+
+linters:
+  enable:
+    # Default linters
+    - errcheck
+    - gosimple
+    - govet
+    - ineffassign
+    - staticcheck
+    - typecheck
+    - unused
+    
+    # Additional linters
+    - bodyclose
+    - dogsled
+    - dupl
+    - exportloopref
+    - exhaustive
+    - gci
+    - gochecknoinits
+    - gocognit
+    - goconst
+    - gocritic
+    - gocyclo
+    - godot
+    - gofmt
+    - gofumpt
+    - goheader
+    - goimports
+    - goprintffuncname
+    - gosec
+    - lll
+    - misspell
+    - nakedret
+    - nestif
+    - noctx
+    - nolintlint
+    - prealloc
+    - revive
+    - rowserrcheck
+    - sqlclosecheck
+    - stylecheck
+    - unconvert
+    - unparam
+    - whitespace
+
+  disable:
+    - gomnd # Magic numbers - too many false positives
+    - wsl   # Whitespace linter - too strict
+    - nlreturn # New line return - too strict
+
+linters-settings:
+  errcheck:
+    check-type-assertions: true
+    check-blank: true
+
+  exhaustive:
+    default-signifies-exhaustive: true
+
+  goconst:
+    min-len: 3
+    min-occurrences: 3
+
+  gocritic:
+    enabled-tags:
+      - diagnostic
+      - experimental
+      - opinionated
+      - performance
+      - style
+
+  gocyclo:
+    min-complexity: 15
+
+  gocognit:
+    min-complexity: 20
+
+  gofmt:
+    simplify: true
+
+  goimports:
+    local-prefixes: github.com/yourusername/yourproject
+
+  golint:
+    min-confidence: 0.8
+
+  govet:
+    check-shadowing: true
+    enable-all: true
+
+  lll:
+    line-length: 120
+    tab-width: 4
+
+  misspell:
+    locale: US
+
+  nakedret:
+    max-func-lines: 30
+
+  prealloc:
+    simple: true
+    range-loops: true
+    for-loops: true
+
+  revive:
+    ignore-generated-header: true
+    severity: warning
+    rules:
+      - name: blank-imports
+      - name: context-as-argument
+      - name: context-keys-type
+      - name: dot-imports
+      - name: error-return
+      - name: error-strings
+      - name: error-naming
+      - name: exported
+      - name: if-return
+      - name: increment-decrement
+      - name: var-naming
+      - name: var-declaration
+      - name: package-comments
+      - name: range
+      - name: receiver-naming
+      - name: time-naming
+      - name: unexported-return
+      - name: indent-error-flow
+      - name: errorf
+      - name: empty-block
+      - name: superfluous-else
+      - name: unused-parameter
+      - name: unreachable-code
+      - name: redefines-builtin-id
+
+  unparam:
+    check-exported: false
+
+  unused:
+    check-exported: false
+
+issues:
+  max-issues-per-linter: 50
+  max-same-issues: 10
+  new: false
+  exclude-rules:
+    # Exclude some linters from running on tests files
+    - path: _test\.go
+      linters:
+        - gocyclo
+        - errcheck
+        - dupl
+        - gosec
+        - gocognit
+    
+    # Exclude known issues in generated files
+    - path: \.pb\.go
+      linters:
+        - golint
+        - stylecheck
+    
+    # Exclude lll issues for long lines with URLs
+    - linters:
+        - lll
+      source: "https://"
+
+  exclude-use-default: false

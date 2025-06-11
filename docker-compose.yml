@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  go-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: go-dev:latest
+    container_name: go-development
+    volumes:
+      # Mount current directory to workspace
+      - .:/workspace
+      # Mount Go module cache for faster builds
+      - go-modules:/home/developer/go/pkg/mod
+      # Mount Go build cache
+      - go-cache:/home/developer/.cache/go-build
+      # VS Code server extensions
+      - vscode-extensions:/home/developer/.vscode-server/extensions
+      - vscode-insiders:/home/developer/.vscode-server-insiders
+      # NPM cache for Claude Code
+      - npm-cache:/home/developer/.npm
+    environment:
+      # Development environment variables
+      - GO111MODULE=on
+      - CGO_ENABLED=0
+    ports:
+      # Delve debugger port
+      - "2345:2345"
+      # Application ports (adjust as needed)
+      - "8080:8080"
+      - "3030:3000"
+    stdin_open: true
+    tty: true
+    networks:
+      - go-network
+
+volumes:
+  go-modules:
+  go-cache:
+  vscode-extensions:
+  vscode-insiders:
+  npm-cache:
+
+networks:
+  go-network:
+    driver: bridge
