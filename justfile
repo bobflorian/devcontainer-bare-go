@@ -8,26 +8,26 @@ binary_path := "./cmd/" + binary_name
 new-project name="":
     #!/usr/bin/env bash
     set -euo pipefail
-    
+
     # Get project name
     if [ -z "{{name}}" ]; then
         read -p "Enter the new project name: " PROJECT_NAME
     else
         PROJECT_NAME="{{name}}"
     fi
-    
+
     # Validate project name
     if [ -z "$PROJECT_NAME" ]; then
         echo "Error: Project name cannot be empty"
         exit 1
     fi
-    
+
     # Get GitHub owner (personal or organization)
     echo "Where should this repository be created?"
     echo "1) Personal (bobflorian)"
     echo "2) Organization (Planstone)"
     read -p "Select (1 or 2): " OWNER_CHOICE
-    
+
     case $OWNER_CHOICE in
         1)
             GITHUB_OWNER="bobflorian"
@@ -40,31 +40,30 @@ new-project name="":
             exit 1
             ;;
     esac
-    
+
     # Set source and target directories
     SOURCE_DIR="$(pwd)"
     TARGET_DIR="../$PROJECT_NAME"
-    
+
     # Check if target directory already exists
     if [ -d "$TARGET_DIR" ]; then
         echo "Error: Directory $TARGET_DIR already exists"
         exit 1
     fi
-    
+
     echo "Creating new Go project: $PROJECT_NAME"
     echo "GitHub: $GITHUB_OWNER/$PROJECT_NAME"
     echo "Location: $TARGET_DIR"
     echo ""
-    
+
     # Create target directory
     mkdir -p "$TARGET_DIR"
-    
+
     # Copy all files except .git and other unwanted files
     echo "Copying template files..."
     rsync -av \
         --exclude='.git/' \
         --exclude='.git' \
-        --exclude='.gitignore' \
         --exclude='coverage.out' \
         --exclude='coverage.html' \
         --exclude='bin/' \
@@ -72,74 +71,72 @@ new-project name="":
         --exclude='*.test' \
         --exclude='*.out' \
         "$SOURCE_DIR/" "$TARGET_DIR/"
-    
+
     # Change to target directory
     cd "$TARGET_DIR"
-    
+
     # Update go.mod with new project name
     echo "Updating go.mod..."
     if [ -f "go.mod" ]; then
         sed -i.bak "s|module .*|module github.com/$GITHUB_OWNER/$PROJECT_NAME|" go.mod
         rm go.mod.bak
     fi
-    
+
     # Initialize git repository
     echo "Initializing git repository..."
     git init
     
     # Create initial .gitignore if it doesn't exist
     if [ ! -f ".gitignore" ]; then
-        cat > .gitignore << 'EOF'
-# Binaries for programs and plugins
-*.exe
-*.exe~
-*.dll
-*.so
-*.dylib
-
-# Test binary, built with `go test -c`
-*.test
-
-# Output of the go coverage tool
-*.out
-coverage.html
-coverage.out
-
-# Dependency directories
-vendor/
-
-# Go workspace file
-go.work
-
-# IDE specific files
-.idea/
-.vscode/
-*.swp
-*.swo
-*~
-
-# OS specific files
-.DS_Store
-Thumbs.db
-
-# Project specific
-bin/
-dist/
-*.log
-.env
-.env.local
-EOF
+        echo '# Binaries for programs and plugins' > .gitignore
+        echo '*.exe' >> .gitignore
+        echo '*.exe~' >> .gitignore
+        echo '*.dll' >> .gitignore
+        echo '*.so' >> .gitignore
+        echo '*.dylib' >> .gitignore
+        echo '' >> .gitignore
+        echo '# Test binary, built with `go test -c`' >> .gitignore
+        echo '*.test' >> .gitignore
+        echo '' >> .gitignore
+        echo '# Output of the go coverage tool' >> .gitignore
+        echo '*.out' >> .gitignore
+        echo 'coverage.html' >> .gitignore
+        echo 'coverage.out' >> .gitignore
+        echo '' >> .gitignore
+        echo '# Dependency directories' >> .gitignore
+        echo 'vendor/' >> .gitignore
+        echo '' >> .gitignore
+        echo '# Go workspace file' >> .gitignore
+        echo 'go.work' >> .gitignore
+        echo '' >> .gitignore
+        echo '# IDE specific files' >> .gitignore
+        echo '.idea/' >> .gitignore
+        echo '.vscode/' >> .gitignore
+        echo '*.swp' >> .gitignore
+        echo '*.swo' >> .gitignore
+        echo '*~' >> .gitignore
+        echo '' >> .gitignore
+        echo '# OS specific files' >> .gitignore
+        echo '.DS_Store' >> .gitignore
+        echo 'Thumbs.db' >> .gitignore
+        echo '' >> .gitignore
+        echo '# Project specific' >> .gitignore
+        echo 'bin/' >> .gitignore
+        echo 'dist/' >> .gitignore
+        echo '*.log' >> .gitignore
+        echo '.env' >> .gitignore
+        echo '.env.local' >> .gitignore
     fi
-    
+
     # Add all files to git
     git add .
     git commit -m "Initial commit from Go template"
-    
+
     # Create GitHub repository
     echo ""
     echo "Creating GitHub repository..."
     gh repo create "$GITHUB_OWNER/$PROJECT_NAME" --private --source=. --remote=origin --push
-    
+
     echo ""
     echo "✅ Successfully created new project: $PROJECT_NAME"
     echo "📁 Location: $TARGET_DIR"
@@ -157,22 +154,22 @@ new: new-project
 dry-run name="":
     #!/usr/bin/env bash
     set -euo pipefail
-    
+
     # Get project name
     if [ -z "{{name}}" ]; then
         read -p "Enter the new project name: " PROJECT_NAME
     else
         PROJECT_NAME="{{name}}"
     fi
-    
+
     if [ -z "$PROJECT_NAME" ]; then
         echo "Error: Project name cannot be empty"
         exit 1
     fi
-    
+
     SOURCE_DIR="$(pwd)"
     TARGET_DIR="../$PROJECT_NAME"
-    
+
     echo "Would create: $TARGET_DIR"
     echo ""
     echo "Files that would be copied:"
